@@ -1,5 +1,5 @@
 section .data
-	prompt db "Enter a filename: ", 10
+	prompt db "Enter a filename: "
 	lprompt equ $ - prompt
 
 	open_fail_msg db "Failed to open the specified file", 10;
