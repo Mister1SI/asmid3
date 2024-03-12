@@ -44,6 +44,16 @@ _start:
 	; Store the file descriptor
 	mov [fd], rax
 
+	; Map it to memory
+	mov rax, 9		; mmap
+	mov rdi, 0		; Address (NULL)
+	mov rsi, 128		; Size
+	mov rdx, 0		; Protections
+	mov r10, 0		; Flags
+	mov r8, [fd]		; File descriptor
+	mov r9, 0		; Offset
+	;syscall
+
 	; Close the file
 	mov rax, 3
 	mov rdi, [fd]
