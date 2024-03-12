@@ -14,35 +14,43 @@ section .text
 global _start
 
 _start:
+	; Print the filename prompt
 	mov rax, 1
 	mov rdi, 1
 	mov rsi, prompt
 	mov rdx, lprompt
 	syscall
 
+	; Read the response
 	mov rax, 0
 	mov rdi, 0
 	mov rsi, buffer
 	mov rdx, 256
 	syscall
 
+	; Try to open the file
 	mov rax, 2
 	mov rdi, buffer
 	mov rsi, 0
 	mov rdx, 00644
 	syscall
 
-	cmp rax, -1
-	jne open_success
+	; Check for open failures
+	cmp rax, 0
+	je open_success
 	call open_fail
 	open_success:
 
+	; Store the file descriptor
 	mov [fd], rax
 
+	; Close the file
 	mov rax, 3
 	mov rdi, [fd]
 	syscall
 
+	; Exit the program
+	exit:
 	mov rax, 60
 	mov rdi, 0
 	syscall
